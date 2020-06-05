@@ -1,0 +1,70 @@
+/* You can add global styles to this file, and also import other style files */
+
+/*HERE'S A MONTSERRAT FONT. PUTTING IT HERE */
+@import url('https://fonts.googleapis.com/css?family=Montserrat:500,600|Open+Sans|Open+Sans+Condensed:700');
+
+body {
+  font-family: "Montserrat", Verdana, Arial, Helvetica, sans-serif;
+  font-weight: 500;
+  font-style: normal;
+  color: #fff;
+  background-color: #000;
+  padding-top: 56px;
+}
+
+.navbar-dark {
+  background-color: #000000;
+  background-image: url('./assets/images/global-nav-bg.png');
+  background-size: 2px;
+}
+
+.text-uppercase {
+  text-transform: uppercase;
+}
+
+.subtitle-card {
+  text-transform: uppercase;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.title-default {
+  font-size: 30px;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  font-weight: 700;
+  color: #a59d95;
+  line-height: 1.15;
+  letter-spacing: 2px;
+}
+
+.label-info {
+  position: relative;
+  padding-left: 15px;
+
+  &:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 2px;
+    opacity: .75;
+  }
+
+  &.yellow:before {
+    background-color: #d0a137;
+  }
+
+  &.blue:before {
+    background-color: #80d5ff;
+  }
+}
+
+dl {
+  dt, dd {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+}
