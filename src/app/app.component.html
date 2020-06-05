@@ -11,7 +11,10 @@
           <div class="media mb-2">
             <img src="./assets/images/{{ player.platform }}.svg" width="24" class="mr-2">
             <div class="media-body">
-              <h5 class="mt-0">{{ player.username }}</h5>
+              <h5 class="mt-0 ellipsis">
+                [<span class="text-warning">PBCxZ</span>]
+                {{ player.username }}
+              </h5>
             </div>
           </div>
           <p class="subtitle-card">
@@ -21,20 +24,20 @@
             <div class="row">
               <div class="col-4">
                 <dl class="label-info yellow">
-                  <dt>Wins</dt>
-                  <dd>{{ player.lifetime.mode.br_all.properties.wins }}</dd>
+                  <dt class="ellipsis">Wins</dt>
+                  <dd class="ellipsis">{{ player.lifetime.mode.br_all.properties.wins }}</dd>
                 </dl>
               </div>
               <div class="col-4">
                 <dl class="label-info yellow">
-                  <dt>Ratio</dt>
-                  <dd>{{ getFormattedNumber(player.lifetime.mode.br_all.properties.kdRatio) }}</dd>
+                  <dt class="ellipsis">Ratio</dt>
+                  <dd class="ellipsis">{{ getFormattedNumber(player.lifetime.mode.br_all.properties.kdRatio) }}</dd>
                 </dl>
               </div>
               <div class="col-4">
                 <dl class="label-info yellow">
-                  <dt>Top 5</dt>
-                  <dd>{{ player.lifetime.mode.br_all.properties.topFive }}</dd>
+                  <dt class="ellipsis">Top 5</dt>
+                  <dd class="ellipsis">{{ player.lifetime.mode.br_all.properties.topFive }}</dd>
                 </dl>
               </div>
             </div>
@@ -44,20 +47,20 @@
             <div class="row">
               <div class="col-4">
                 <dl class="label-info blue">
-                  <dt>Kills</dt>
-                  <dd>{{ getKillsProgress(player) }}</dd>
+                  <dt class="ellipsis">Kills</dt>
+                  <dd class="ellipsis {{ getClassNum(getKillsProgress(player)) }}">{{ getKillsProgress(player) }}%</dd>
                 </dl>
               </div>
               <div class="col-4">
                 <dl class="label-info blue">
-                  <dt>Deaths</dt>
-                  <dd>{{ getDeathsProgress(player) }}</dd>
+                  <dt class="ellipsis">Deaths</dt>
+                  <dd class="ellipsis {{ getClassNum(getDeathsProgress(player), true) }}">{{ getDeathsProgress(player) }}%</dd>
                 </dl>
               </div>
               <div class="col-4">
                 <dl class="label-info blue">
-                  <dt>Ratio</dt>
-                  <dd>{{ getRatioProgress(player) }}</dd>
+                  <dt class="ellipsis">Ratio</dt>
+                  <dd class="ellipsis {{ getClassNum(getRatioProgress(player)) }}">{{ getRatioProgress(player) }}%</dd>
                 </dl>
               </div>
             </div>

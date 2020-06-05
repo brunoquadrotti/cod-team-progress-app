@@ -40,7 +40,6 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     this.players.forEach(player => {
       this.statusService.getStatus(player.gamertag).subscribe(data => {
-        console.log(data);
         this.playersResult.push(data);
       });
     });
@@ -66,5 +65,20 @@ export class AppComponent implements OnInit {
     const A1 = data.weekly.mode.br_all.properties.kdRatio;
     const B1 = data.lifetime.mode.br_all.properties.kdRatio;
     return this.getFormattedNumber(((A1 / B1) - 1) * 100);
+  }
+
+  getClassNum(num, inverse = false) {
+
+    let isNegative = this.isNegative(num);
+
+    if(inverse) {
+      isNegative = !isNegative;
+    }
+
+    return isNegative ? 'text-danger' : 'text-success';
+  }
+
+  private isNegative(num) {
+    return (num < 0);
   }
 }

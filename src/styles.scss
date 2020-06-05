@@ -61,10 +61,16 @@ body {
   }
 }
 
-dl {
-  dt, dd {
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
+.ellipsis {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.media {
+  .media-body {
+    h5 {
+      width: calc(100% - 33px);
+    }
   }
 }
