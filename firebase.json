@@ -1,0 +1,17 @@
+{
+  "hosting": {
+    "site": "cod-team-progress",
+    "public": "dist/cod-team-performance-app",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  }
+}

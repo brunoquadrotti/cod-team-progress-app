@@ -7,7 +7,11 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "update-players-data": "node get-json-users.js",
+    "deploy-firebase": "firebase deploy --only hosting:cod-team-progress",
+    "build-prod": "ng build --prod",
+    "build-all": "npm run update-players-data && npm run build-prod && npm run deploy-firebase"
   },
   "private": true,
   "dependencies": {
