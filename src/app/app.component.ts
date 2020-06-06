@@ -7,8 +7,10 @@ import { CodMwStatusService } from './cod-mw-status.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  title = 'cod-team-performance-app';
+  
+  regimentCode = 'PBCzX';
 
+  // TODO: Obter de uma API esses dados
   players = [{
     gamertag: 'iDarkHorse x',
     displayName: 'iDarkHorse x',
@@ -45,6 +47,7 @@ export class AppComponent implements OnInit {
     });
   }
 
+  // TODO: Adicionar num service esses métodos auxiliares abaixo
   getFormattedNumber(num) {
     return num.toFixed(2);
   }
