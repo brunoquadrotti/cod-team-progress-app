@@ -1,27 +1,23 @@
-# CodTeamPerformanceApp
+# cod-team-performance-app
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.1.7.
+## Projeto pessoal para testar a API do Call of Duty
 
-## Development server
+O objetivo é obter as informações de determinados players de um Squad e mostrar a evolução deles durante um período de tempo.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Ele será construído utilizando o framework **Angular** em sua versão mais recente e será transformado em um **PWA**.
 
-## Code scaffolding
+Será realizado também o deploy desse projeto no **Firebase** para que seja possível testá-lo.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Executar projeto local
 
-## Build
+```shell
+npm start
+```
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+## Atualizar projeto no Firebase
 
-## Running unit tests
+É necessário possuir acesso a conta deste projeto no **Firebase** e previamente realizar o login.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+```shell
+npm run build-all
+```
