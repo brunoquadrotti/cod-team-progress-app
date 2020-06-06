@@ -11,59 +11,26 @@ const platformsMap = {
     uno: API.platforms.uno
 };
 
-const showLog = (data, name) => {
+if (!config.email || !config.password) {
+    throw new Error('Please enter an email and password login.');
+}
+
+if (!config.players || !config.players.length) {
+    throw new Error('Please entervalid players.');
+}
+
+const generateJsonFile = (data, name) => {
     fse.outputFile(`${__dirname}/src/assets/json/${name}.json`, JSON.stringify(data, null, 2));
-    // console.log(name, JSON.stringify({
-    //     lifetime: {
-    //         kills: data.lifetime.mode.br_all.properties.kills,
-    //         deaths: data.lifetime.mode.br_all.properties.deaths,
-    //         ratio: data.lifetime.mode.br_all.properties.kdRatio,
-    //         damageDone: data.lifetime.mode.br_all.properties.damageDone,
-    //         matchDamage: (data.lifetime.mode.br_all.properties.damageDone / data.lifetime.mode.br_all.properties.matchesPlayed),
-    //         gamesPlayed: data.lifetime.mode.br_all.properties.gamesPlayed
-    //     },
-    //     weekly: {
-    //         kills: data.weekly.mode.br_all.properties.kills,
-    //         deaths: data.weekly.mode.br_all.properties.deaths,
-    //         ratio: data.weekly.mode.br_all.properties.kdRatio,
-    //         damageDone: data.weekly.mode.br_all.properties.damageDone,
-    //         matchDamage: (data.weekly.mode.br_all.properties.damageDone / data.weekly.mode.br_all.properties.matchesPlayed),
-    //         matchesPlayed: data.weekly.mode.br_all.properties.matchesPlayed
-    //     },
-    //     progress: {
-    //         kills: getKillsProgress(data),
-    //         deaths: getDeathsProgress(data),
-    //         ratio: getRatioProgress(data)
-    //     }
-    // }, null, 2));
 };
 
-const getKillsProgress = (data) => {
-    const A1 = data.weekly.mode.br_all.properties.kills / data.weekly.mode.br_all.properties.matchesPlayed;
-    const B1 = data.lifetime.mode.br_all.properties.kills / data.lifetime.mode.br_all.properties.gamesPlayed;
-    return ((A1 / B1) - 1) * 100;
-};
-
-const getDeathsProgress = (data) => {
-    const A1 = data.weekly.mode.br_all.properties.deaths / data.weekly.mode.br_all.properties.matchesPlayed;
-    const B1 = data.lifetime.mode.br_all.properties.deaths / data.lifetime.mode.br_all.properties.gamesPlayed;
-    return ((A1 / B1) - 1) * 100;
-};
-
-const getRatioProgress = (data) => {
-    const A1 = data.weekly.mode.br_all.properties.kdRatio;
-    const B1 = data.lifetime.mode.br_all.properties.kdRatio;
-    return ((A1 / B1) - 1) * 100;
-};
-
-const getByPlayerName = async (player, platform) => {
+const getStatus = async (player, platform) => {
     return await API.MWwz(player, platform);
 };
 
 const getMWStatus = () => {
     config.players.forEach(async item => {
-        return await getByPlayerName(item.player, platformsMap[item.platform]).then(data => {
-            showLog(data, item.player);
+        return await getStatus(item.player, platformsMap[item.platform]).then(data => {
+            generateJsonFile(data, item.player);
         }).catch(err => {
             console.error(err);
         })
