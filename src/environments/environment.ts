@@ -3,7 +3,8 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  firebaseApiUrl: 'https://us-central1-app-cod-team-progress.cloudfunctions.net'
 };
 
 /*

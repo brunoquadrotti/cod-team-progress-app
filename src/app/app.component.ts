@@ -7,7 +7,7 @@ import { CodMwStatusService } from './cod-mw-status.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  
+
   regimentCode = 'PBCzX';
 
   // TODO: Obter de uma API esses dados
@@ -40,10 +40,8 @@ export class AppComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.players.forEach(player => {
-      this.statusService.getStatus(player.gamertag).subscribe(data => {
-        this.playersResult.push(data);
-      });
+    this.statusService.getPlayersStatus(this.players).subscribe((data: any) => {
+      this.playersResult = data;
     });
   }
 
