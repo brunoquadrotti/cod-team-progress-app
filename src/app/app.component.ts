@@ -31,6 +31,10 @@ export class AppComponent implements OnInit {
     gamertag: 'Flagship#7434196',
     displayName: 'Flagship',
     platform: 'uno'
+  }, {
+    gamertag: 'RachaCuca080',
+    displayName: 'RachaCuca',
+    platform: 'xbl'
   }];
 
   playersResult = [];
@@ -40,6 +44,10 @@ export class AppComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.getPlayersStatus();
+  }
+
+  getPlayersStatus() {
     this.statusService.getPlayersStatus(this.players).subscribe((data: any) => {
       this.playersResult = data;
     });
@@ -72,7 +80,7 @@ export class AppComponent implements OnInit {
 
     let isNegative = this.isNegative(num);
 
-    if(inverse) {
+    if (inverse) {
       isNegative = !isNegative;
     }
 

@@ -1,4 +1,7 @@
-/* You can add global styles to this file, and also import other style files */
+$yellow-color: #d0a137;
+$blue-color: #80d5ff;
+$red-color: #ff2121;
+$green-color: #5cfc7b;
 
 /*HERE'S A MONTSERRAT FONT. PUTTING IT HERE */
 @import url('https://fonts.googleapis.com/css?family=Montserrat:500,600|Open+Sans|Open+Sans+Condensed:700');
@@ -26,12 +29,12 @@ body {
   text-transform: uppercase;
   font-size: 12px;
   font-weight: 700;
+  margin-bottom: .5rem;
 }
 
 .title-default {
   font-size: 12px;
   text-transform: uppercase;
-  margin-bottom: 20px;
   font-weight: 700;
   color: #a59d95;
   line-height: 1.15;
@@ -53,11 +56,24 @@ body {
   }
 
   &.yellow:before {
-    background-color: #d0a137;
+    background-color: $yellow-color;
   }
 
   &.blue:before {
-    background-color: #80d5ff;
+    background-color: $blue-color;
+  }
+
+  &.red:before {
+    background-color: $red-color;
+  }
+
+  &.green:before {
+    background-color: $green-color;
+  }
+
+  dt {
+    font-size: 10px;
+    text-transform: uppercase;
   }
 }
 
@@ -73,4 +89,20 @@ body {
       width: calc(100% - 33px);
     }
   }
+}
+
+.text-success {
+  color: $green-color !important;
+}
+
+.text-danger {
+  color: $red-color !important;
+}
+
+.text-warning {
+  color: $yellow-color !important;
+}
+
+pull-to-refresh * {
+  box-sizing: content-box !important;
 }
