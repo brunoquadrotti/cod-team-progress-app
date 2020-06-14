@@ -9,6 +9,7 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "deploy-firebase": "firebase deploy --only hosting:cod-team-progress",
+    "deploy-firebase-functions": "cd functions/ && firebase deploy --only functions && cd ../",
     "build-prod": "ng build --prod",
     "build-all": "npm run build-prod && npm run deploy-firebase"
   },
@@ -29,6 +30,7 @@
     "firebase-admin": "^8.12.1",
     "firebase-functions": "^3.6.2",
     "jquery": "^3.5.1",
+    "ngx-loading": "^8.0.0",
     "rxjs": "~6.5.4",
     "tslib": "^1.10.0",
     "zone.js": "~0.10.2"

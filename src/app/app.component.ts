@@ -8,40 +8,10 @@ import { CodMwStatusService } from './cod-mw-status.service';
 })
 export class AppComponent implements OnInit {
 
+  loading = false;
   regimentCode = 'PBCzX';
 
-  // TODO: Obter de uma API esses dados
-  players = [{
-    gamertag: 'iDarkHorse x',
-    displayName: 'iDarkHorse x',
-    platform: 'xbl'
-  }, {
-    gamertag: 'NyahBingui5947',
-    displayName: 'NyahBinghi',
-    platform: 'xbl'
-  }, {
-    gamertag: 'iquee#11219',
-    displayName: 'iquee',
-    platform: 'battle'
-  }, {
-    gamertag: 'gdose#2859135',
-    displayName: 'gdose',
-    platform: 'uno'
-  }, {
-    gamertag: 'Flagship#7434196',
-    displayName: 'Flagship',
-    platform: 'uno'
-  }, {
-    gamertag: 'RachaCuca080',
-    displayName: 'RachaCuca',
-    platform: 'xbl'
-  }, {
-    gamertag: 'xX iPredador Xx',
-    displayName: 'xX iPredador Xx',
-    platform: 'xbl'
-  }];
-
-  playersResult = [];
+  players = [];
 
   constructor(
     private statusService: CodMwStatusService
@@ -52,9 +22,19 @@ export class AppComponent implements OnInit {
   }
 
   getPlayersStatus() {
-    this.statusService.getPlayersStatus(this.players).subscribe((data: any) => {
-      this.playersResult = data;
+    this.loading = true;
+    this.statusService.getPlayersStatus().subscribe((data: any) => {
+      this.players = data;
+      this.loading = false;
+    }, err => {
+      this.loading = false;
     });
+  }
+
+  refresh(event) {
+    event.preventDefault();
+    this.players = [];
+    this.getPlayersStatus();
   }
 
   // TODO: Adicionar num service esses métodos auxiliares abaixo

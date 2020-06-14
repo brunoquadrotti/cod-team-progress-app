@@ -7,6 +7,9 @@ const cors = require('cors')({
 });
 const API = require('call-of-duty-api')();
 
+// TODO: Obter de uma API esses dados
+const PLAYERS = require('./players.json').players;
+
 async function _getStatus(player) {
   return await API.MWwz(player.gamertag, player.platform);
 }
@@ -79,7 +82,7 @@ exports.getPlayersStatus = functions.https.onRequest(async (req, res) => {
     return res.status(403).send('Forbidden!');
   }
 
-  const players = JSON.parse(req.query.players);
+  const players = PLAYERS;
 
   console.log('PLAYER ====> ', req.query.players);
 
@@ -117,8 +120,13 @@ exports.getPlayersStatus = functions.https.onRequest(async (req, res) => {
       const all = await Promise.all(players.map(player => _getStatus(player))).then((values) => {
         return values;
       });
+
+      // Add data in players
+      players.forEach(player => {
+        player.data = all.find(p => p.username === player.gamertag);
+      });
   
-      return handleResponse(200, all);
+      return handleResponse(200, players);
     });
   }
   catch (error) {

@@ -25,11 +25,7 @@ export class CodMwStatusService {
     });
   }
 
-  getPlayersStatus(players) {
-    return this.http.get(`${this.FIREBASE_API}/getPlayersStatus`, {
-      params: {
-        players: JSON.stringify(players)
-      }
-    });
+  getPlayersStatus() {
+    return this.http.get(`${this.FIREBASE_API}/getPlayersStatus`);
   }
 }

@@ -1,0 +1,38 @@
+{
+  "players": [{
+    "gamertag": "iDarkHorse x",
+    "displayName": "iDarkHorse x",
+    "platform": "xbl",
+    "playingPlatform": "xbl"
+  }, {
+    "gamertag": "NyahBingui5947",
+    "displayName": "NyahBinghi",
+    "platform": "xbl",
+    "playingPlatform": "xbl"
+  }, {
+    "gamertag": "iquee#11219",
+    "displayName": "iquee",
+    "platform": "battle",
+    "playingPlatform": "battle"
+  }, {
+    "gamertag": "gdose#2859135",
+    "displayName": "gdose",
+    "platform": "uno",
+    "playingPlatform": "psn"
+  }, {
+    "gamertag": "Flagship#7434196",
+    "displayName": "Flagship",
+    "platform": "uno",
+    "playingPlatform": "battle"
+  }, {
+    "gamertag": "RachaCuca080",
+    "displayName": "RachaCuca",
+    "platform": "xbl",
+    "playingPlatform": "xbl"
+  }, {
+    "gamertag": "xX iPredador Xx",
+    "displayName": "xX iPredador Xx",
+    "platform": "xbl",
+    "playingPlatform": "xbl"
+  }]
+}
