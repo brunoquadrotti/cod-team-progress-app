@@ -1,5 +1,5 @@
 <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand text-uppercase" href="#">CoD Team Progress</a>
+  <a class="navbar-brand text-uppercase" href="#">CoD Warzone Team Progress</a>
 </nav>
 
 <div class="container-fluid">
@@ -21,20 +21,20 @@
             <p class="subtitle-card">
               Overview
             </p>
-            <div class="row">
-              <div class="col-4">
+            <div class="row custom-card-row">
+              <div class="col-4 custom-card-col">
                 <dl class="label-info blue">
                   <dt class="ellipsis">Wins</dt>
                   <dd class="ellipsis">{{ player.lifetime.mode.br_all.properties.wins }}</dd>
                 </dl>
               </div>
-              <div class="col-4">
+              <div class="col-4 custom-card-col">
                 <dl class="label-info blue">
                   <dt class="ellipsis">Top 5</dt>
                   <dd class="ellipsis">{{ player.lifetime.mode.br_all.properties.topFive }}</dd>
                 </dl>
               </div>
-              <div class="col-4">
+              <div class="col-4 custom-card-col">
                 <dl class="label-info blue">
                   <dt class="ellipsis">Top 10</dt>
                   <dd class="ellipsis">{{ player.lifetime.mode.br_all.properties.topTen }}</dd>
@@ -45,20 +45,20 @@
             <p class="subtitle-card">
               Progress
             </p>
-            <div class="row">
-              <div class="col-4">
+            <div class="row custom-card-row">
+              <div class="col-4 custom-card-col">
                 <dl class="label-info blue">
                   <dt class="ellipsis">Kills</dt>
                   <dd class="ellipsis {{ getClassNum(getKillsProgress(player)) }}">{{ getKillsProgress(player) }}%</dd>
                 </dl>
               </div>
-              <div class="col-4">
+              <div class="col-4 custom-card-col">
                 <dl class="label-info blue">
                   <dt class="ellipsis">Deaths</dt>
                   <dd class="ellipsis {{ getClassNum(getDeathsProgress(player), true) }}">{{ getDeathsProgress(player) }}%</dd>
                 </dl>
               </div>
-              <div class="col-4">
+              <div class="col-4 custom-card-col">
                 <dl class="label-info blue">
                   <dt class="ellipsis">Ratio</dt>
                   <dd class="ellipsis {{ getClassNum(getRatioProgress(player)) }}">{{ getRatioProgress(player) }}%</dd>
@@ -70,20 +70,20 @@
             <p class="subtitle-card">
               Weekly
             </p>
-            <div class="row">
-              <div class="col-4">
+            <div class="row custom-card-row">
+              <div class="col-4 custom-card-col">
                 <dl class="label-info blue">
                   <dt class="ellipsis">Kills</dt>
                   <dd class="ellipsis">{{ player.weekly.mode.br_all.properties.kills }}</dd>
                 </dl>
               </div>
-              <div class="col-4">
+              <div class="col-4 custom-card-col">
                 <dl class="label-info blue">
                   <dt class="ellipsis">Deaths</dt>
                   <dd class="ellipsis">{{ player.weekly.mode.br_all.properties.deaths }}</dd>
                 </dl>
               </div>
-              <div class="col-4">
+              <div class="col-4 custom-card-col">
                 <dl class="label-info blue">
                   <dt class="ellipsis">Ratio</dt>
                   <dd class="ellipsis">{{ getFormattedNumber(player.weekly.mode.br_all.properties.kdRatio) }}</dd>
@@ -95,20 +95,20 @@
             <p class="subtitle-card">
               Lifetime
             </p>
-            <div class="row">
-              <div class="col-4">
+            <div class="row custom-card-row">
+              <div class="col-4 custom-card-col">
                 <dl class="label-info blue">
                   <dt class="ellipsis">Kills</dt>
                   <dd class="ellipsis">{{ player.lifetime.mode.br_all.properties.kills }}</dd>
                 </dl>
               </div>
-              <div class="col-4">
+              <div class="col-4 custom-card-col">
                 <dl class="label-info blue">
                   <dt class="ellipsis">Deaths</dt>
                   <dd class="ellipsis">{{ player.lifetime.mode.br_all.properties.deaths }}</dd>
                 </dl>
               </div>
-              <div class="col-4">
+              <div class="col-4 custom-card-col">
                 <dl class="label-info blue">
                   <dt class="ellipsis">Ratio</dt>
                   <dd class="ellipsis">{{ getFormattedNumber(player.lifetime.mode.br_all.properties.kdRatio) }}</dd>

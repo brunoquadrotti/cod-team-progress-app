@@ -35,6 +35,10 @@ export class AppComponent implements OnInit {
     gamertag: 'RachaCuca080',
     displayName: 'RachaCuca',
     platform: 'xbl'
+  }, {
+    gamertag: 'xX iPredador Xx',
+    displayName: 'xX iPredador Xx',
+    platform: 'xbl'
   }];
 
   playersResult = [];
@@ -55,25 +59,39 @@ export class AppComponent implements OnInit {
 
   // TODO: Adicionar num service esses métodos auxiliares abaixo
   getFormattedNumber(num) {
-    return num.toFixed(2);
+    if (typeof num === 'number') {
+      return num.toFixed(2);
+    }
+
+    return 0;
   }
 
   getKillsProgress(data) {
-    const A1 = data.weekly.mode.br_all.properties.kills / data.weekly.mode.br_all.properties.matchesPlayed;
-    const B1 = data.lifetime.mode.br_all.properties.kills / data.lifetime.mode.br_all.properties.gamesPlayed;
+    const A1 = this.getGenericValue(data, 'weekly', 'kills') / this.getGenericValue(data, 'weekly', 'matchesPlayed');
+    const B1 = this.getGenericValue(data, 'lifetime', 'kills') / this.getGenericValue(data, 'lifetime', 'gamesPlayed');
     return this.getFormattedNumber(((A1 / B1) - 1) * 100);
   }
 
   getDeathsProgress(data) {
-    const A1 = data.weekly.mode.br_all.properties.deaths / data.weekly.mode.br_all.properties.matchesPlayed;
-    const B1 = data.lifetime.mode.br_all.properties.deaths / data.lifetime.mode.br_all.properties.gamesPlayed;
+    const A1 = this.getGenericValue(data, 'weekly', 'deaths') / this.getGenericValue(data, 'weekly', 'matchesPlayed');
+    const B1 = this.getGenericValue(data, 'lifetime', 'deaths') / this.getGenericValue(data, 'lifetime', 'gamesPlayed');
     return this.getFormattedNumber(((A1 / B1) - 1) * 100);
   }
 
   getRatioProgress(data) {
-    const A1 = data.weekly.mode.br_all.properties.kdRatio;
-    const B1 = data.lifetime.mode.br_all.properties.kdRatio;
+    const A1 = this.getGenericValue(data, 'weekly', 'kdRatio');
+    const B1 = this.getGenericValue(data, 'lifetime', 'kdRatio');
     return this.getFormattedNumber(((A1 / B1) - 1) * 100);
+  }
+
+  getGenericValue(data, period, prop) {
+    if (data[period].mode.br_all
+      && data[period].mode.br_all.properties
+      && data[period].mode.br_all.properties[prop]) {
+        return data[period].mode.br_all.properties[prop];
+    }
+
+    return 0;
   }
 
   getClassNum(num, inverse = false) {
