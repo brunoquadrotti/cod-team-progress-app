@@ -9,6 +9,7 @@ import { CodMwStatusService } from './cod-mw-status.service';
 export class AppComponent implements OnInit {
 
   loading = false;
+  reqFinished = false;
   regimentCode = 'PBCzX';
 
   players = [];
@@ -22,18 +23,21 @@ export class AppComponent implements OnInit {
   }
 
   getPlayersStatus() {
+    this.players = [];
     this.loading = true;
+    this.reqFinished = false;
     this.statusService.getPlayersStatus().subscribe((data: any) => {
       this.players = data;
       this.loading = false;
+      this.reqFinished = true;
     }, err => {
       this.loading = false;
+      this.reqFinished = true;
     });
   }
 
   refresh(event) {
     event.preventDefault();
-    this.players = [];
     this.getPlayersStatus();
   }
 

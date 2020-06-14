@@ -21,11 +21,11 @@
             <div class="media-body">
               <h5 class="mt-0 ellipsis">
                 [<span class="text-warning">{{ regimentCode }}</span>]
-                {{ player.data.username }}
+                {{ player.displayName }}
               </h5>
             </div>
           </div>
-          <div class="card-text">
+          <div class="card-text" *ngIf="player.data">
             <p class="subtitle-card">
               Overview
             </p>
@@ -127,5 +127,8 @@
         </div>
       </div>
     </div>
+  </div>
+  <div *ngIf="!players.length && reqFinished" class="alert alert-warning">
+    <strong>Limite excedido.</strong> Não foi possível buscar os dados da API pois o limite de solicitacões foi excedido.
   </div>
 </div>
