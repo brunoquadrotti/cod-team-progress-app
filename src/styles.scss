@@ -39,6 +39,10 @@ body {
   color: #a59d95;
   line-height: 1.15;
   letter-spacing: 2px;
+
+  &.title-default-small {
+    font-size: 8px;
+  }
 }
 
 .label-info {

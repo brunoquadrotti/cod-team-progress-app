@@ -11,6 +11,7 @@ export class AppComponent implements OnInit {
   loading = false;
   reqFinished = false;
   regimentCode = 'PBCzX';
+  lastPlayersUpdateDate: number;
 
   players = [];
 
@@ -30,6 +31,9 @@ export class AppComponent implements OnInit {
       this.players = data;
       this.loading = false;
       this.reqFinished = true;
+      this.lastPlayersUpdateDate = JSON.parse(
+        localStorage.getItem('lastPlayersUpdateDate')
+      );
     }, err => {
       this.loading = false;
       this.reqFinished = true;

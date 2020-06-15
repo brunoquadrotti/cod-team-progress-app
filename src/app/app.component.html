@@ -12,6 +12,9 @@
     Team Progress
     <a class="float-right" href="#" (click)="refresh($event)">Recarregar</a>
   </h1>
+  <h2 class="mt-3 mb-3 title-default title-default-small" *ngIf="lastPlayersUpdateDate">
+    Última atualização em: {{ lastPlayersUpdateDate | date: 'dd/MM/yyyy hh:mm:ss a' }}
+  </h2>
   <div class="row">
     <div class="col-sm-6 col-lg-4 col-xl-3" *ngFor="let player of players">
       <div class="card bg-dark mb-4">
@@ -124,11 +127,14 @@
               </div>
             </div>
           </div>
+          <div class="alert alert-warning mb-0" *ngIf="!player.data">
+            Não foi possível buscar os dados desse usuário.
+          </div>
         </div>
       </div>
     </div>
   </div>
-  <div *ngIf="!players.length && reqFinished" class="alert alert-warning">
+  <div class="alert alert-warning" *ngIf="!players.length && reqFinished">
     <strong>Limite excedido.</strong> Não foi possível buscar os dados da API pois o limite de solicitacões foi excedido.
   </div>
 </div>

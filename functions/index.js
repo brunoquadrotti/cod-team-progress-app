@@ -84,20 +84,18 @@ exports.getPlayersStatus = functions.https.onRequest(async (req, res) => {
 
   const players = PLAYERS;
 
-  console.log('PLAYER ====> ', req.query.players);
-
   const handleError = (error) => {
     console.error(error);
     return res.sendStatus(500);
   };
 
   const handleResponse = (status, body) => {
-    console.log({
+    console.log(JSON.stringify({
       Response: {
         Status: status,
         Body: body,
       },
-    });
+    }, null, 2));
     if (body) {
       return res.status(200).json(body);
     }
