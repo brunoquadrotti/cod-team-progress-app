@@ -1,0 +1,110 @@
+@import '../../styles/variables';
+
+.profile-container {
+  .card-body {
+    min-height: 231px;
+    position: relative;
+
+    .profile-image-container {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      width: 100%;
+      transform: translateY(-50%);
+
+      .image-profile {
+        width: 96px;
+        height: 96px;
+        background-color: #fff;
+        border-radius: 50%;
+        border: 2px solid #fff;
+      }
+    }
+
+    .profile-title {
+      font-size: 2rem;
+    }
+  }
+}
+
+.match-container-item {
+  position: relative;
+
+  .card.custom-card {
+
+    position: relative;
+  
+    &:before {
+      position: absolute;
+      content: "";
+      top: 0;
+      left: 0;
+      width: 3px;
+      height: 100%;
+      background-color: $red-color;
+    }
+  
+    &.winner:before {
+      background-color: $green-color;
+    }
+  
+    .card-body {
+      padding: 1.25rem 0;
+      .position-container {
+        width: 88px;
+        padding: 0 1.25rem;
+        position: absolute;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        top: 0;
+        left: 0;  
+      }
+      .matche-container {
+        width: calc(100% - 88px);
+        display: inline-block;
+        padding-right: 1.25rem;
+        margin-left: 88px;
+      }
+    }
+  }
+
+  .collapse-info-action {
+    position: absolute;
+    content: "";
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+@media (max-width: 575px) {
+  .card {
+    .card-body {
+      .position-container {
+        width: 60px; 
+      }
+      .matche-container {
+        width: calc(100% - 60px);
+        margin-left: 60px;
+  
+        .item-desc {
+          float: left;
+      
+          &:last-child {
+            margin-top: -3px;
+            margin-left: 10px;
+          }
+        }
+      }
+    }
+  }
+  .profile-container > div > div:first-child {
+    .card {
+      margin-bottom: 0.5rem;
+    }
+  }
+}
+

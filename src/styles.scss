@@ -1,7 +1,4 @@
-$yellow-color: #d0a137;
-$blue-color: #80d5ff;
-$red-color: #ff2121;
-$green-color: #5cfc7b;
+@import './styles/variables';
 
 /*HERE'S A MONTSERRAT FONT. PUTTING IT HERE */
 @import url('https://fonts.googleapis.com/css?family=Montserrat:500,600|Open+Sans|Open+Sans+Condensed:700');
@@ -107,6 +104,6 @@ body {
   color: $yellow-color !important;
 }
 
-pull-to-refresh * {
-  box-sizing: content-box !important;
+.text-secondary {
+  color: #d9ebff;
 }

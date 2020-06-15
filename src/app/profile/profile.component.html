@@ -1,0 +1,168 @@
+<ngx-loading
+  [show]="loading"
+  [config]="{ backdropBorderRadius: '3px' }"
+></ngx-loading>
+
+<h1 class="mt-3 mb-3 title-default">
+	Team Profile
+	<a class="float-right" href="#" (click)="back($event)">Back</a>
+</h1>
+
+<div class="profile-container" *ngIf="playerCombatwz">
+	<div class="row">
+		<div class="col-sm-6">
+			<div class="card bg-dark">
+				<div class="card-body text-center">
+					<div class="profile-image-container">
+						<div class="w-100">
+							<img *ngIf="playerFuzzySearch.avatar" [src]="playerFuzzySearch.avatar.avatarUrlSmallSsl" class="image-profile">
+							<img *ngIf="!playerFuzzySearch.avatar" [src]="'/assets/images/profile-default.png'" class="image-profile">
+						</div>
+						<div class="w-100">
+							<h5 class="mb-0 mt-2 profile-title">{{ playerFuzzySearch.username }}</h5>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-sm-6">
+			<div class="card bg-dark">
+				<div class="card-body">
+					<p class="subtitle-card">
+						Summary
+					</p>
+					<div class="row">
+						<div class="col-sm-3 col-6">
+							<dl class="label-info blue">
+								<dt class="ellipsis">Kills</dt>
+								<dd class="ellipsis">{{ playerCombatwz.summary.all.kills }}</dd>
+							</dl>
+						</div>
+						<div class="col-sm-3 col-6">
+							<dl class="label-info blue">
+								<dt class="ellipsis">Deaths</dt>
+								<dd class="ellipsis">{{ playerCombatwz.summary.all.deaths }}</dd>
+							</dl>
+						</div>
+						<div class="col-sm-3 col-6">
+							<dl class="label-info blue">
+								<dt class="ellipsis">Ratio</dt>
+								<dd class="ellipsis">{{ getFormattedValue(playerCombatwz.summary.all.kdRatio) }}</dd>
+							</dl>
+						</div>
+						<div class="col-sm-3 col-6">
+							<dl class="label-info blue">
+								<dt class="ellipsis">Assists</dt>
+								<dd class="ellipsis">{{ playerCombatwz.summary.all.assists }}</dd>
+							</dl>
+						</div>
+						<div class="col-sm-3 col-6">
+							<dl class="label-info blue">
+								<dt class="ellipsis">Matches Played</dt>
+								<dd class="ellipsis">{{ playerCombatwz.summary.all.matchesPlayed }}</dd>
+							</dl>
+						</div>
+						<div class="col-sm-3 col-6">
+							<dl class="label-info blue">
+								<dt class="ellipsis">Headshots</dt>
+								<dd class="ellipsis">{{ playerCombatwz.summary.all.headshots }}</dd>
+							</dl>
+						</div>
+						<div class="col-sm-3 col-6">
+							<dl class="label-info blue">
+								<dt class="ellipsis">Kills Per Game</dt>
+								<dd class="ellipsis">{{ playerCombatwz.summary.all.killsPerGame }}</dd>
+							</dl>
+						</div>
+						<div class="col-sm-3 col-6">
+							<dl class="label-info blue">
+								<dt class="ellipsis">Distance Traveled</dt>
+								<dd class="ellipsis">{{ getFormattedValue(playerCombatwz.summary.all.distanceTraveled) }}</dd>
+							</dl>
+						</div>
+						<div class="col-sm-3 col-6">
+							<dl class="label-info blue">
+								<dt class="ellipsis">Score</dt>
+								<dd class="ellipsis">{{ playerCombatwz.summary.all.score }}</dd>
+							</dl>
+						</div>
+						<div class="col-sm-3 col-6">
+							<dl class="label-info blue">
+								<dt class="ellipsis">Score Per Minute</dt>
+								<dd class="ellipsis">{{ getFormattedValue(playerCombatwz.summary.all.scorePerMinute) }}</dd>
+							</dl>
+						</div>
+						<div class="col-sm-3 col-6">
+							<dl class="label-info blue">
+								<dt class="ellipsis">Time Played</dt>
+								<dd class="ellipsis">{{ playerCombatwz.summary.all.timePlayed }}</dd>
+							</dl>
+						</div>
+						<div class="col-sm-3 col-6">
+							<dl class="label-info blue">
+								<dt class="ellipsis">Wall Bangs</dt>
+								<dd class="ellipsis">{{ playerCombatwz.summary.all.wallBangs }}</dd>
+							</dl>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<ng-container *ngIf="playerCombatwz">
+	<h2 class="mt-3 mb-3 title-default">Last 20 matches</h2>
+	<div class="match-container-item mb-2" *ngFor="let matche of playerCombatwz.matches; let matchIdx = index">
+		<div class="card custom-card bg-dark" [ngClass]="{ 'winner': isWinner(getPosition(matche)) }">
+			<div class="card-body">
+				<div class="position-container">
+					<strong>{{ getPosition(matche) }}º</strong>
+				</div>
+				<div class="matche-container">
+					<div class="row">
+						<div class="col-sm-4">
+							<p class="mb-0">{{ getBrCode(matche.mode) }} <span class="badge badge-secondary ml-2">{{ getStartDate(matche.utcStartSeconds) | date: 'dd/MM HH:mm' }}</span></p>
+							<p class="mb-0 text-secondary">Verdansk</p>
+						</div>
+						<div class="col-sm-2">
+							<p class="mb-0 subtitle-card item-desc">Kills</p>
+							<p class="mb-0 item-desc">{{ matche.playerStats.kills }}</p>
+						</div>
+						<div class="col-sm-2">
+							<p class="mb-0 subtitle-card item-desc">Deaths</p>
+							<p class="mb-0 item-desc">{{ matche.playerStats.deaths }}</p>
+						</div>
+						<div class="col-sm-2">
+							<p class="mb-0 subtitle-card item-desc">Ratio</p>
+							<p class="mb-0 item-desc">{{ getFormattedRatio(matche.playerStats.kdRatio) }}</p>
+						</div>
+						<div class="col-sm-2">
+							<p class="mb-0 subtitle-card item-desc">Damage</p>
+							<p class="mb-0 item-desc">{{ matche.playerStats.damageDone }}</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="collapse" id="collapse-info-{{ matchIdx }}">
+			<div class="card bg-dark">
+				<div class="card-body">
+					<div class="row">
+						<div class="col-sm-3 mb-2" *ngFor="let key of objectKeys(matche.playerStats)">
+							{{ getLabel(key) + ': ' + getFormattedValue(matche.playerStats[key]) }}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<a
+			class="collapse-info-action"
+			data-toggle="collapse"
+			href="#collapse-info-{{ matchIdx }}"
+			role="button"
+			aria-expanded="false"
+		>
+		</a>
+	</div>
+</ng-container>
