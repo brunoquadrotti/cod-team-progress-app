@@ -1,0 +1,17 @@
+<ngx-loading
+  [show]="loading"
+  [config]="{ backdropBorderRadius: '3px' }"
+></ngx-loading>
+
+<h1 class="mt-3 mb-3 title-default">
+  Team Progress
+  <a class="float-right" href="#" (click)="refresh($event)">Refresh</a>
+</h1>
+<div class="row">
+  <div class="col-sm-6 col-lg-4 col-xl-3" *ngFor="let player of players">
+    <smart-card-user [player]="player"></smart-card-user>
+  </div>
+</div>
+<div class="alert alert-warning" *ngIf="!players.length && reqFinished">
+  <strong>Limite excedido.</strong> Não foi possível buscar os dados da API pois o limite de solicitacões foi excedido.
+</div>
