@@ -1,0 +1,11 @@
+.card-img-top {
+    background-image: url('/assets/images/loading_mp_donetsk_bg.png');
+    background-size: cover;
+
+    .card-img-top-inner {
+        flex: 1 1 auto;
+        min-height: 1px;
+        padding: 1.25rem;
+        background: linear-gradient(180deg,rgba(27,38,64,.5) 0,rgba(27,38,64,.5) 10%,#1b2640);
+    }
+}

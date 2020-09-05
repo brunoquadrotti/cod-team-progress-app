@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CodMwStatusService } from '../cod-mw-status.service';
-import { BrCodes } from '../enums/br-code.enum';
+import { CodMwStatusService } from '../shared/services/cod-mw-status.service';
 import { forkJoin } from 'rxjs';
-import { PlayerStats } from '../literals/player-stats.literals';
+import { UtilsService } from '../shared/services/utils.service';
 
 @Component({
   selector: 'app-profile',
@@ -22,6 +21,7 @@ export class ProfileComponent implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     private codService: CodMwStatusService,
+    private utils: UtilsService,
     private router: Router
   ) {
     this.gamertag = this.activatedRoute.snapshot.paramMap.get('gamertag');
@@ -53,69 +53,30 @@ export class ProfileComponent implements OnInit {
   }
 
   getBrCode(code) {
-    return BrCodes[code] || code;
+    return this.utils.getBrCode(code);
   }
 
-  getPosition(matche) {
-    let position = 0;
-
-    if (matche.mode === 'brtdm_113' || matche.mode === 'brtdm_rmbl') {
-
-      if (matche.player.result) {
-        if (matche.player.result === 'win') {
-          position = 1;
-        } else {
-          position = 2;
-        }
-      }
-
-      if (matche.rankedTeams) {
-        const playerTeam = matche.player.team;
-        matche.rankedTeams.forEach((team, idx) => {
-          if (team.name === playerTeam) {
-            position = idx + 1;
-          }
-        });
-      }
-
-      return position;
-    }
-
-    if (matche.playerStats.teamPlacement) {
-      return matche.playerStats.teamPlacement;
-    } else {
-      return position;
-    }
+  getPosition(teamPlacement) {
+    return this.utils.getPosition(teamPlacement);
   }
 
   getStartDate(date) {
-    return new Date(date * 1000);
+    return this.utils.getStartDate(date);
   }
 
   getFormattedRatio(num) {
-    return +num.toFixed(2);
+    return this.utils.getFormattedRatio(num);
   }
 
   isWinner(position) {
-    return position === 1;
+    return this.utils.isWinner(position);
   }
 
   getLabel(key) {
-    if (!PlayerStats[key]) {
-      console.log('Esse não existe: ', key);
-    }
-    return PlayerStats[key] || this.capitalizeFirstLetter(key);
+    return this.utils.getLabel(key);
   }
 
   getFormattedValue(val) {
-    if (typeof val === 'number') {
-      return +val.toFixed(2);
-    }
-
-    return val;
-  }
-
-  private capitalizeFirstLetter(str) {
-    return str.charAt(0).toUpperCase() + str.slice(1);
+    return this.utils.getFormattedValue(val);
   }
 }

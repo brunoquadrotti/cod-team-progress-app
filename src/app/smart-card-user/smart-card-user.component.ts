@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
+import { UtilsService } from '../shared/services/utils.service';
 
 @Component({
   selector: 'smart-card-user',
@@ -13,7 +14,8 @@ export class SmartCardUserComponent implements OnInit {
   regimentCode = 'PBCzX';
 
   constructor(
-    private router: Router
+    private router: Router,
+    private utils: UtilsService
   ) {}
 
   ngOnInit(): void {}
@@ -22,56 +24,23 @@ export class SmartCardUserComponent implements OnInit {
     this.router.navigate(['/profile', platform, gamertag]);
   }
 
-  // TODO: Adicionar num service esses métodos auxiliares abaixo
-  getFormattedNumber(num) {
-    if (typeof num === 'number') {
-      return +num.toFixed(2);
-    }
-
-    return 0;
+  getFormattedValue(num) {
+    return this.utils.getFormattedValue(num);
   }
 
   getKillsProgress(data) {
-    const A1 = this.getGenericValue(data, 'weekly', 'kills') / this.getGenericValue(data, 'weekly', 'matchesPlayed');
-    const B1 = this.getGenericValue(data, 'lifetime', 'kills') / this.getGenericValue(data, 'lifetime', 'gamesPlayed');
-    return this.getFormattedNumber(((A1 / B1) - 1) * 100) || 0;
+    return this.utils.getKillsProgress(data);
   }
 
   getDeathsProgress(data) {
-    const A1 = this.getGenericValue(data, 'weekly', 'deaths') / this.getGenericValue(data, 'weekly', 'matchesPlayed');
-    const B1 = this.getGenericValue(data, 'lifetime', 'deaths') / this.getGenericValue(data, 'lifetime', 'gamesPlayed');
-    return this.getFormattedNumber(((A1 / B1) - 1) * 100) || 0;
+    return this.utils.getDeathsProgress(data);
   }
 
   getRatioProgress(data) {
-    const A1 = this.getGenericValue(data, 'weekly', 'kdRatio');
-    const B1 = this.getGenericValue(data, 'lifetime', 'kdRatio');
-    return this.getFormattedNumber(((A1 / B1) - 1) * 100) || 0;
-  }
-
-  getGenericValue(data, period, prop) {
-    if (data[period].mode.br_all
-      && data[period].mode.br_all.properties
-      && data[period].mode.br_all.properties[prop]) {
-        return data[period].mode.br_all.properties[prop];
-    }
-
-    return 0;
+    return this.utils.getRatioProgress(data);
   }
 
   getClassNum(num, inverse = false) {
-
-    let isNegative = this.isNegative(num);
-
-    if (inverse) {
-      isNegative = !isNegative;
-    }
-
-    return isNegative ? 'text-danger' : 'text-success';
+    return this.utils.getClassNum(num, inverse);
   }
-
-  private isNegative(num) {
-    return (num < 0);
-  }
-
 }

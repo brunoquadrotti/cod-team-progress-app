@@ -1,0 +1,11 @@
+.footer-nav-actions {
+    position: fixed;
+    bottom: 0;
+    background-image: url('../assets/images/global-nav-bg.png');
+    background-color: #343a40;
+
+    a {
+        padding: 16px;
+        display: inline-block;
+    }
+}

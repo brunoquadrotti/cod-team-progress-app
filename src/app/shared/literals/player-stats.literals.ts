@@ -54,4 +54,4 @@ export const PlayerStats = {
   '2objectiveWeaponDropTeammateUsed': '2 Objective Weapon Drop Teammate Used',
   objectiveTrophyDefense: 'Objective Trophy Defense',
   objectiveAssistDecoy: 'Objective Assist Decoy',
-}
+};

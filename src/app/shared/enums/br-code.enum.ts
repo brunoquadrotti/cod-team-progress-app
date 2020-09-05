@@ -13,5 +13,7 @@ export enum BrCodes {
   brtdm_rmbl = 'Warzone Rumble',
   br_dmz_plunquad = 'Saque Quads',
   br_brthquad = 'BR 200 Quads',
-  br_brtriostim_name2 = 'BR Stimulus Trios'
+  br_brtriostim_name2 = 'BR Stimulus Trios',
+  br_dmz_plnbld = 'Blood Money',
+  br_kingslayer_kingsltrios = 'King Slayer Trios'
 }
