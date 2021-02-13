@@ -36,34 +36,18 @@ export class LastMatchesComponent implements OnInit {
       platform: 'battle'
     });
     const $obs4 = this.codService.getMWcombatwz({
-      gamertag: 'gdose#2859135',
-      platform: 'uno'
-    });
-    const $obs5 = this.codService.getMWcombatwz({
-      gamertag: 'Flagship#7434196',
-      platform: 'uno'
-    });
-    const $obs6 = this.codService.getMWcombatwz({
-      gamertag: 'RachaCuca080',
-      platform: 'xbl'
-    });
-    const $obs7 = this.codService.getMWcombatwz({
       gamertag: 'xXiBigheroXx',
       platform: 'xbl'
     });
-    const $obs8 = this.codService.getMWcombatwz({
-      gamertag: 'brualva',
-      platform: 'psn'
-    });
 
-    forkJoin([$obs1, $obs2, $obs3, $obs4, $obs5, $obs6, $obs7, $obs8]).subscribe((results) => {
+    forkJoin([$obs1, $obs2, $obs3, $obs4]).subscribe((results) => {
 
       const matches = [];
 
       const getMatch = (matchID) => {
-        const match = matches.filter(match => {
-          if (match && match.matchID) {
-            return match.matchID === matchID;
+        const match = matches.filter((m) => {
+          if (m && m.matchID) {
+            return m.matchID === matchID;
           }
           return false;
         })[0];
