@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  firebaseApiUrl: 'https://us-central1-app-cod-team-progress.cloudfunctions.net'
+  firebaseApiUrl: 'https://us-central1-app-cod-team-progress.cloudfunctions.net/api'
 };
 
 /*

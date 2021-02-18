@@ -83,7 +83,7 @@
         <div class="col-4 custom-card-col">
           <dl class="label-info blue">
             <dt class="ellipsis">Ratio</dt>
-            <dd class="ellipsis" *ngIf="player.weekly.mode.br_all">{{ getFormattedNumber(player.weekly.mode.br_all.properties.kdRatio) }}</dd>
+            <dd class="ellipsis" *ngIf="player.weekly.mode.br_all">{{ getFormattedValue(player.weekly.mode.br_all.properties.kdRatio) }}</dd>
             <dd class="ellipsis" *ngIf="!player.weekly.mode.br_all">0</dd>
           </dl>
         </div>
@@ -109,7 +109,7 @@
         <div class="col-4 custom-card-col">
           <dl class="label-info blue">
             <dt class="ellipsis">Ratio</dt>
-            <dd class="ellipsis">{{ getFormattedNumber(player.lifetime.mode.br_all.properties.kdRatio) }}</dd>
+            <dd class="ellipsis">{{ getFormattedValue(player.lifetime.mode.br_all.properties.kdRatio) }}</dd>
           </dl>
         </div>
       </div>

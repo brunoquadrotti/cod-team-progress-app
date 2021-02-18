@@ -113,33 +113,33 @@
 
 <ng-container *ngIf="playerCombatwz">
 	<h2 class="mt-3 mb-3 title-default">Last 20 matches</h2>
-	<div class="match-container-item mb-2" *ngFor="let matche of playerCombatwz.matches; let matchIdx = index">
-		<div class="card custom-card bg-dark" [ngClass]="{ 'winner': isWinner(getPosition(matche)) }">
+	<div class="match-container-item mb-2" *ngFor="let match of playerCombatwz.matches; let matchIdx = index">
+		<div class="card custom-card bg-dark" [ngClass]="{ 'winner': isWinner(getPosition(match?.playerStats?.teamPlacement || 0)) }">
 			<div class="card-body">
 				<div class="position-container">
-					<strong>{{ getPosition(matche) }}º</strong>
+					<strong>{{ getPosition(match?.playerStats?.teamPlacement || 0) }}º</strong>
 				</div>
-				<div class="matche-container">
+				<div class="match-container">
 					<div class="row">
 						<div class="col-sm-4">
-							<p class="mb-0">{{ getBrCode(matche.mode) }} <span class="badge badge-secondary ml-2">{{ getStartDate(matche.utcStartSeconds) | date: 'dd/MM HH:mm' }}</span></p>
+							<p class="mb-0">{{ getBrCode(match.mode) }} <span class="badge badge-secondary ml-2">{{ getStartDate(match.utcStartSeconds) | date: 'dd/MM HH:mm' }}</span></p>
 							<p class="mb-0 text-secondary">Verdansk</p>
 						</div>
 						<div class="col-sm-2">
 							<p class="mb-0 subtitle-card item-desc">Kills</p>
-							<p class="mb-0 item-desc">{{ matche.playerStats.kills }}</p>
+							<p class="mb-0 item-desc">{{ match.playerStats.kills }}</p>
 						</div>
 						<div class="col-sm-2">
 							<p class="mb-0 subtitle-card item-desc">Deaths</p>
-							<p class="mb-0 item-desc">{{ matche.playerStats.deaths }}</p>
+							<p class="mb-0 item-desc">{{ match.playerStats.deaths }}</p>
 						</div>
 						<div class="col-sm-2">
 							<p class="mb-0 subtitle-card item-desc">Ratio</p>
-							<p class="mb-0 item-desc">{{ getFormattedRatio(matche.playerStats.kdRatio) }}</p>
+							<p class="mb-0 item-desc">{{ getFormattedRatio(match.playerStats.kdRatio) }}</p>
 						</div>
 						<div class="col-sm-2">
 							<p class="mb-0 subtitle-card item-desc">Damage</p>
-							<p class="mb-0 item-desc">{{ matche.playerStats.damageDone }}</p>
+							<p class="mb-0 item-desc">{{ match.playerStats.damageDone }}</p>
 						</div>
 					</div>
 				</div>
@@ -149,8 +149,8 @@
 			<div class="card bg-dark">
 				<div class="card-body">
 					<div class="row">
-						<div class="col-sm-3 mb-2" *ngFor="let key of objectKeys(matche.playerStats)">
-							{{ getLabel(key) + ': ' + getFormattedValue(matche.playerStats[key]) }}
+						<div class="col-sm-3 mb-2" *ngFor="let key of objectKeys(match.playerStats)">
+							{{ getLabel(key) + ': ' + getFormattedValue(match.playerStats[key]) }}
 						</div>
 					</div>
 				</div>

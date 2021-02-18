@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CodMwStatusService } from '../cod-mw-status.service';
+import { CodMwStatusService } from '../shared/services/cod-mw-status.service';
 
 @Component({
   selector: 'app-home',

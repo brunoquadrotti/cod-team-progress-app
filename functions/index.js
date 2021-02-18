@@ -4,8 +4,13 @@ const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 const cors = require('cors')({ origin: true });
 const CODAPI = require('call-of-duty-api')();
+const app = require('express')();
 
 admin.initializeApp();
+
+// const dbUtils = require('./db-utils');
+
+const db = admin.firestore().collection('matches');
 
 let lastLogin = 0;
 
@@ -40,12 +45,12 @@ const _handleError = (res, error) => {
 };
 
 const _handleResponse = (res, status, body) => {
-  console.log(JSON.stringify({
-    Response: {
-      Status: status,
-      Body: body,
-    },
-  }, null, 2));
+  // console.log(JSON.stringify({
+  //   Response: {
+  //     Status: status,
+  //     Body: body,
+  //   },
+  // }, null, 2));
   if (body) {
     return res.status(200).json(body);
   }
@@ -86,7 +91,7 @@ const _baseRequest = (req, res, method, listParams) => {
           const isValidDate = Date.now() - value.lastUpdateDate < 1800000; // 30 minutos
           
           if (isValidDate) {
-            console.log(`${method} Success Firebase Database =====>`, value.data);
+            // console.log(`${method} Success Firebase Database =====>`, value.data);
             result.push(JSON.parse(value.data));
             return;
           }
@@ -128,7 +133,7 @@ const _baseRequest = (req, res, method, listParams) => {
   }
 }
 
-exports.getPlayersStatus = functions.https.onRequest(async (req, res) => {
+app.get('/getPlayersStatus', async (req, res) => {
 
   if (req.method === 'PUT') {
     return res.status(403).send('Forbidden!');
@@ -140,7 +145,7 @@ exports.getPlayersStatus = functions.https.onRequest(async (req, res) => {
   return _baseRequest(req, res, 'MWwz', players.map(player => [player.gamertag, player.platform]));
 });
 
-exports.getFriendFeed = functions.https.onRequest(async (req, res) => {
+app.get('/getFriendFeed', async (req, res) => {
 
   const player = JSON.parse(req.query.player);
   
@@ -149,7 +154,7 @@ exports.getFriendFeed = functions.https.onRequest(async (req, res) => {
   ]);
 });
 
-exports.getPlayerStatus = functions.https.onRequest(async (req, res) => {
+app.get('/getPlayerStatus', async (req, res) => {
 
   const player = JSON.parse(req.query.player);
 
@@ -158,7 +163,7 @@ exports.getPlayerStatus = functions.https.onRequest(async (req, res) => {
   ]);
 });
 
-exports.getFuzzySearch = functions.https.onRequest(async (req, res) => {
+app.get('/getFuzzySearch', async (req, res) => {
 
   const player = JSON.parse(req.query.player);
   
@@ -167,7 +172,7 @@ exports.getFuzzySearch = functions.https.onRequest(async (req, res) => {
   ]);
 });
 
-exports.getMWcombatwz = functions.https.onRequest(async (req, res) => {
+app.get('/getMWcombatwz', async (req, res) => {
 
   const player = JSON.parse(req.query.player);
   
@@ -175,3 +180,203 @@ exports.getMWcombatwz = functions.https.onRequest(async (req, res) => {
     [player.gamertag, player.platform]
   ]);
 });
+
+app.get('/getMatches', (req, res) => {
+  db.get()
+    .then((docsMatches) => {
+      const matches = [];
+
+      docsMatches.forEach(match => {
+        matches.push(match.data());
+      });
+
+      return res.json(matches);
+    }).catch((err) => {
+      console.error(err);
+      res.status(500);
+    });
+});
+
+app.get('/match', async (req, res) => {
+
+  const matchID = req.query.matchID;
+
+  try {
+    const matchesQuery = await db.where('matchID', '==', matchID).get();
+    const matches = [];
+    matchesQuery.forEach((docMatch) => {
+      matches.push(docMatch.data());
+    });
+    res.json(matches);
+  } catch (err) {
+    console.error(err);
+    res.status(500);
+  }
+});
+
+const _getMatch = async (matchID) => {
+  console.log('MEIO utils matchID: ', matchID);
+  try {
+    const matches = [];
+    const matchesQuery = await db.where('matchID', '==', matchID).get();
+    
+    matchesQuery.forEach((docMatch) => {
+      matches.push({
+        id: docMatch.id,
+        data: docMatch.data()
+      });
+    });
+
+    // retorna somente o primeiro match
+    return matches[0];
+  } catch (err) {
+    console.error(err);
+    return null;
+  }
+};
+
+const _createMatch = (matchID, data, isUpdate = false) => {
+  return new Promise((resolve, reject) => {
+    const docRef = db.doc(matchID);
+    const method = isUpdate ? 'update' : 'set';
+
+    return docRef[method](data).then((updateTime) => {
+      console.log(`DB ${updateTime}: ${isUpdate ? 'Atualizei' : 'Criei'} o matchID: ${matchID}`);
+      return resolve(updateTime);
+    }, err => {
+      reject(err);
+    });
+  });
+};
+
+let isRunningUpdateTeams = false;
+
+app.get('/update-team-matches', async (req, res) => {
+  const players = PLAYERS;
+
+  if (isRunningUpdateTeams) {
+    res.json({
+      message: 'IN_PROGRESS',
+      matches: []
+    });
+    return;
+  }
+
+  try {
+    // Sempre executa o login antes de chamar algum método da API do CoD
+    await _loginCoDAPI();
+
+    const playersCombat = await Promise.all(players.map((player) => {
+      return CODAPI.MWcombatwz(player.gamertag, player.platform);
+    }));
+
+    const matches = [];
+
+    playersCombat.forEach((playerCombat) => {
+      playerCombat.matches.forEach((match) => {
+        const playerStats = match.playerStats;
+        playerStats.username = match.player.username;
+        const data = {
+          utcStartSeconds: (match.utcStartSeconds * 1000),
+          utcEndSeconds: (match.utcEndSeconds * 1000),
+          mode: match.mode,
+          matchID: match.matchID,
+          teamPlacement: null,
+          playersStats: [
+            JSON.stringify(playerStats)
+          ]
+        };
+        matches.push(data);
+      });
+    });
+
+    let idx = 0;
+
+    const addMatch = async () => {
+      for (const match of matches) {
+        const docRef = db.doc(match.matchID);
+        const doc = await docRef.get();
+        console.log(`O documento existe? ${doc.exists ? 'Sim' : 'Não'} - ${idx + 1} - ${Date.now()}`);
+
+        const playerStats = match.playerStats;
+        playerStats.username = match.player.username;
+
+        if (doc.exists) {
+          const data = doc.data();
+          const isIncluded = data.playersStats.some((ps) => ps.username === match.player.username);
+
+          if (!isIncluded) {
+            data.playersStats.push(playerStats);
+            await _createMatch(match.matchID, data, true);
+          }
+        } else {
+          console.log('Vou criar o matchID: ', match.matchID);
+          const data = {
+            utcStartSeconds: (match.utcStartSeconds * 1000),
+            utcEndSeconds: (match.utcEndSeconds * 1000),
+            mode: match.mode,
+            matchID: match.matchID,
+            teamPlacement: null,
+            playersStats: [
+              JSON.stringify(playerStats)
+            ]
+          };
+          await _createMatch(match.matchID, data);
+        }
+
+        idx++;
+
+        if (!matches[idx]) {
+          console.log(`TERMINEI`);
+          isRunningUpdateTeams = false;
+        }
+      }
+    };
+
+    addMatch();
+    isRunningUpdateTeams = true;
+
+    /*
+      const docRef = db.doc(match.matchID);
+      const doc = await docRef.get();
+      const playerStats = match.playerStats;
+      playerStats.username = match.player.username;
+
+      if (doc.exists) {
+        console.log('Vou atualizar o matchID: ', match.matchID);
+        const data = doc.data();
+        // verificar se o usuário já existe antes de adicionar novamente
+        data.playersStats.push(playerStats);
+        await _createMatch(match.matchID, data, true);
+      } else {
+        console.log('Vou criar o matchID: ', match.matchID);
+        const data = {
+          utcStartSeconds: (match.utcStartSeconds * 1000),
+          utcEndSeconds: (match.utcEndSeconds * 1000),
+          mode: match.mode,
+          matchID: match.matchID,
+          teamPlacement: null,
+          playersStats: [
+            JSON.stringify(playerStats)
+          ]
+        };
+        await _createMatch(match.matchID, data);
+      }
+    */
+
+    // const match = await dbUtils.getMatch(matchID);
+    // const hasMatch = !!match;
+    // res.json(hasMatch);
+    res.json({
+      message: 'OK',
+      matches: matches
+    });
+    
+  }
+  catch (err) {
+    console.log(err);
+    res.status(500);
+  }
+});
+
+exports.api = functions.https.onRequest(app);

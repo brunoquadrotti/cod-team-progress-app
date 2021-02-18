@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { ProfileComponent } from './profile/profile.component';
+import { LastMatchesComponent } from './last-matches/last-matches.component';
 
 const routes: Routes = [
   {
@@ -11,6 +12,10 @@ const routes: Routes = [
   {
     path: 'profile/:platform/:gamertag',
     component: ProfileComponent
+  },
+  {
+    path: 'last-matches',
+    component: LastMatchesComponent
   }
 ];
 
